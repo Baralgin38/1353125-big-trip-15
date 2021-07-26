@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Илья Емельянов](https://up.htmlacademy.ru/ecmascript/15/user/1353125).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Коршунов](https://htmlacademy.ru/profile/bekobou).
 
 ---
 
