@@ -1,4 +1,4 @@
-export const getTripEventsPointTemplate = () => {
+export const getTripEventsPointTemplate = () => (
   `<li class="trip-events__item">
   <div class="event">
     <time class="event__date" datetime="2019-03-18">MAR 18</time>
@@ -35,5 +35,5 @@ export const getTripEventsPointTemplate = () => {
       <span class="visually-hidden">Open event</span>
     </button>
   </div>
-</li>`;
-};
+</li>`
+);

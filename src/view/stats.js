@@ -1,4 +1,4 @@
-export const getStatsTemplate = () => {
+export const getStatsTemplate = () => (
   `<section class="statistics">
   <h2 class="visually-hidden">Trip statistics</h2>
 
@@ -13,5 +13,5 @@ export const getStatsTemplate = () => {
   <div class="statistics__item">
     <canvas class="statistics__chart" id="time-spend" width="900"></canvas>
   </div>
-</section>`;
-};
+</section>`
+);
