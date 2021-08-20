@@ -1,4 +1,4 @@
-import {getEventDuration} from '../mock/point-mock.js';
+import {getEventDuration} from '../util.js';
 
 const addOffer = (offerData) => {
   const {title, price} = offerData;
