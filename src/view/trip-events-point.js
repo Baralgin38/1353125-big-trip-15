@@ -1,30 +1,52 @@
-export const getTripEventsPointTemplate = () => (
-  `<li class="trip-events__item">
+import {getEventDuration} from '../mock/point-mock.js';
+
+const addOffer = (offerData) => {
+  const {title, price} = offerData;
+
+  return `<li class="event__offer">
+  <span class="event__offer-title">${title}</span>
+  &plus;&euro;&nbsp;
+  <span class="event__offer-price">${price}</span>
+</li>`;
+};
+
+const showOffers = (offersData) => {
+  if (offersData.offers.length === 0 || !offersData.offers) {
+    return '';
+  }
+
+  const offers = offersData.offers
+    .map((offer) => addOffer(offer))
+    .join('');
+
+  return `<ul class="event__selected-offers">
+    ${offers}
+  </ul>`;
+};
+
+export const getTripEventsPointTemplate = (pointData) => {
+  const {type, destination, offer, basicPrice, dateFrom, dateTo} = pointData;
+
+  return `<li class="trip-events__item">
   <div class="event">
-    <time class="event__date" datetime="2019-03-18">MAR 18</time>
+    <time class="event__date" datetime="${dateFrom.format('YYYY-MM-DD')}">${dateFrom.format('ddd DD')}</time>
     <div class="event__type">
-      <img class="event__type-icon" width="42" height="42" src="img/icons/drive.png" alt="Event type icon">
+      <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
     </div>
-    <h3 class="event__title">Drive Chamonix</h3>
+    <h3 class="event__title">${type} ${destination.name}</h3>
     <div class="event__schedule">
       <p class="event__time">
-        <time class="event__start-time" datetime="2019-03-18T14:30">14:30</time>
+        <time class="event__start-time" datetime="${dateFrom.format()}">${dateFrom.format('HH:mm')}</time>
         &mdash;
-        <time class="event__end-time" datetime="2019-03-18T16:05">16:05</time>
+        <time class="event__end-time" datetime="${dateTo.format()}">${dateTo.format('HH:mm')}</time>
       </p>
-      <p class="event__duration">01H 35M</p>
+      <p class="event__duration">${getEventDuration(dateFrom, dateTo)}</p>
     </div>
     <p class="event__price">
-      &euro;&nbsp;<span class="event__price-value">160</span>
+      &euro;&nbsp;<span class="event__price-value">${basicPrice}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
-    <ul class="event__selected-offers">
-      <li class="event__offer">
-        <span class="event__offer-title">Rent a car</span>
-        &plus;&euro;&nbsp;
-        <span class="event__offer-price">200</span>
-      </li>
-    </ul>
+    ${showOffers(offer)}
     <button class="event__favorite-btn  event__favorite-btn--active" type="button">
       <span class="visually-hidden">Add to favorite</span>
       <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -35,5 +57,5 @@ export const getTripEventsPointTemplate = () => (
       <span class="visually-hidden">Open event</span>
     </button>
   </div>
-</li>`
-);
+</li>`;
+};
