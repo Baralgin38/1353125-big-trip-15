@@ -69,11 +69,20 @@ const getPhotos = () => {
   return photos;
 };
 
-const generateDestination = () => ({
-  description: generateDescription(),
-  name: generateCity(),
-  pictures: getPhotos(),
-});
+const generateDestination = () => {
+  const descriptions = [];
+  const descriptionsQuantity = getRandomInteger(1, 5);
+
+  for(let i = descriptionsQuantity; i > 0; i--) {
+    descriptions.push(generateDescription());
+  }
+
+  return {
+    description: descriptions.join(' '),
+    name: generateCity(),
+    pictures: getPhotos(),
+  };
+};
 
 const generateOffer = () => ({
   title: generateDescription(),
