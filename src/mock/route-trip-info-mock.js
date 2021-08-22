@@ -67,7 +67,7 @@ export const getRouteTripInfo = (tripPoints) => {
 
   return {
     cities: getDestinationInfo(sortPointsTrip),
-    date: getDateInfo(tripPoints),
+    dates: getDateInfo(tripPoints),
     months: getMonthInfo(tripPoints),
     totalPrice: getTotalPriceTrip(tripPoints),
   };
