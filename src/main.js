@@ -36,8 +36,4 @@ const tripPointList = tripContentAndSortingContainer.querySelector('.trip-events
 
 render(tripPointList, getEditFormTemplate(tripPoints[0]), 'beforeend');
 
-tripPoints.forEach((value, index) => {
-  if (index > 0 ) {
-    render(tripPointList, getTripEventsPointTemplate(value), 'beforeend');
-  }
-});
+tripPoints.slice(1).forEach((value) => render(tripPointList, getTripEventsPointTemplate(value), 'beforeend'));

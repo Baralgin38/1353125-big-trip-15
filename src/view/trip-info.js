@@ -7,7 +7,7 @@ const printCities = (cities) => {
 };
 
 const printDates = (dates, months) => {
-  if (months.length > 1) {
+  if (months[0] === months.length - 1) {
     return `${months[0]} ${dates[0]}&nbsp;&mdash;&nbsp;${months[months.length -1]} ${dates[dates.length - 1]}`;
   } else {
     return `${months[0]} ${dates[0]}&nbsp;&mdash;&nbsp;${dates[dates.length - 1]}`;

@@ -18,7 +18,7 @@ const getEventDuration = (dateFrom, dateTo) => {
 
   if (differenceInMinutes < MINUTES_PER_HOUR) {
     return `${dateTo.diff(dateFrom, 'm')}M`;
-  } else if (differenceInMinutes > MINUTES_PER_HOUR && differenceInMinutes < MINUTES_PER_DAY) {
+  } else if (differenceInMinutes < MINUTES_PER_DAY) {
     return `${hours}H ${minutes}M`;
   } else if (differenceInMinutes > MINUTES_PER_DAY) {
     return `${days}D ${hours % HOURS_PER_DAY}H ${minutes}M`;

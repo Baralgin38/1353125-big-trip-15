@@ -56,6 +56,24 @@ const generateDescription = () => {
   return descriptions[randomIndex];
 };
 
+const generateOfferDescription = () => {
+  const offerDescriptions = [
+    'Add luggage',
+    'Switch to comfort class',
+    'Add meal',
+    'Choose seats',
+    'Travel by train',
+    'Order Uber',
+    'Rent a car',
+    'Add breakfast',
+    'Book tickets',
+    'Lunch in city',
+  ];
+
+  const randomIndex = getRandomInteger(0, offerDescriptions.length - 1);
+  return offerDescriptions[randomIndex];
+}
+
 
 const generatePhoto = () => ({
   src: `http://picsum.photos/248/152?r=${getRandomInteger(0, 10)}`,
@@ -85,7 +103,7 @@ const generateDestination = () => {
 };
 
 const generateOffer = () => ({
-  title: generateDescription(),
+  title: generateOfferDescription(),
   price: getRandomInteger(50, 550),
 });
 

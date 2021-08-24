@@ -1,12 +1,12 @@
 
 const sortingPointsTrip = (tripPoints) => {
-  const sortArr = tripPoints.slice().sort((a, b) => {
+  const sortArray = tripPoints.slice().sort((a, b) => {
     const first = a.dateFrom.valueOf();
     const second = b.dateFrom.valueOf();
     return first - second;
   });
 
-  return sortArr;
+  return sortArray;
 };
 
 
@@ -22,40 +22,24 @@ const getDestinationInfo = (tripPoints) => {
   return uniqueDestination;
 };
 
-const getDateInfo = (tripPoints) => {
-  const dateInterval = [];
+// const getMonthInfo = (tripPoints) => {
+//   const allMonths = [];
 
-  tripPoints.forEach((value, index, array) => {
-    if (index === 0 || index === array.length - 1) {
-      if (index === 0) {
-        dateInterval.push(value.dateFrom.format('DD'));
-      } else if (index === array.length -1) {
-        dateInterval.push(value.dateTo.format('DD'));
-      }
-    }
-  });
+//   tripPoints.forEach((value, index, array) => {
+//     if (index === 0 || index === array.length - 1) {
+//       if (index === 0) {
+//         allMonths.push(value.dateFrom.format('MMM'));
+//       } else if (index === array.length -1) {
+//         allMonths.push(value.dateTo.format('MMM'));
+//       }
+//     }
+//   });
 
-  return dateInterval;
-};
+//   const month = new Set(allMonths);
+//   const unqiueMonth = Array.from(month);
 
-const getMonthInfo = (tripPoints) => {
-  const allMonths = [];
-
-  tripPoints.forEach((value, index, array) => {
-    if (index === 0 || index === array.length - 1) {
-      if (index === 0) {
-        allMonths.push(value.dateFrom.format('MMM'));
-      } else if (index === array.length -1) {
-        allMonths.push(value.dateTo.format('MMM'));
-      }
-    }
-  });
-
-  const month = new Set(allMonths);
-  const unqiueMonth = Array.from(month);
-
-  return unqiueMonth;
-};
+//   return unqiueMonth;
+// };
 
 const getTotalPriceTrip = (tripPoints) => tripPoints.reduce((accumulator, value) => {
   const {basicPrice} = value;
@@ -65,10 +49,20 @@ const getTotalPriceTrip = (tripPoints) => tripPoints.reduce((accumulator, value)
 export const getRouteTripInfo = (tripPoints) => {
   const sortPointsTrip = sortingPointsTrip(tripPoints);
 
+  const dates = [
+    sortPointsTrip[0].dateFrom.format('DD'),
+    sortPointsTrip[sortPointsTrip.length - 1].dateTo.format('DD'),
+  ];
+
+  const months = [
+    sortPointsTrip[0].dateFrom.format('MMM'),
+    sortPointsTrip[sortPointsTrip.length - 1].dateTo.format('MMM'),
+  ];
+
   return {
     cities: getDestinationInfo(sortPointsTrip),
-    dates: getDateInfo(tripPoints),
-    months: getMonthInfo(tripPoints),
-    totalPrice: getTotalPriceTrip(tripPoints),
+    dates,
+    months,
+    totalPrice: getTotalPriceTrip(sortPointsTrip),
   };
 };
