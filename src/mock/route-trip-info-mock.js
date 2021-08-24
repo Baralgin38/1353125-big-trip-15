@@ -22,25 +22,6 @@ const getDestinationInfo = (tripPoints) => {
   return uniqueDestination;
 };
 
-// const getMonthInfo = (tripPoints) => {
-//   const allMonths = [];
-
-//   tripPoints.forEach((value, index, array) => {
-//     if (index === 0 || index === array.length - 1) {
-//       if (index === 0) {
-//         allMonths.push(value.dateFrom.format('MMM'));
-//       } else if (index === array.length -1) {
-//         allMonths.push(value.dateTo.format('MMM'));
-//       }
-//     }
-//   });
-
-//   const month = new Set(allMonths);
-//   const unqiueMonth = Array.from(month);
-
-//   return unqiueMonth;
-// };
-
 const getTotalPriceTrip = (tripPoints) => tripPoints.reduce((accumulator, value) => {
   const {basicPrice} = value;
   return accumulator + basicPrice;
