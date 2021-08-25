@@ -60,7 +60,7 @@ const getTripEventsPointTemplate = (pointData) => {
 </li>`;
 };
 
-export default class TripEventsPoint {
+export default class TripEventPoint {
   constructor (pointData) {
     this._pointData = pointData;
     this._element = null;

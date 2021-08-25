@@ -5,7 +5,7 @@ const getTripEventsListTemplate = () => (
   </ul>`
 );
 
-export default class TripEventsList {
+export default class TripEventList {
   constructor () {
     this._element = null;
   }

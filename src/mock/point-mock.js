@@ -72,7 +72,7 @@ const generateOfferDescription = () => {
 
   const randomIndex = getRandomInteger(0, offerDescriptions.length - 1);
   return offerDescriptions[randomIndex];
-}
+};
 
 
 const generatePhoto = () => ({
