@@ -7,7 +7,7 @@ import {getFilterTemplate} from './view/filter.js';
 import {getEditFormTemplate} from './view/event-edit-form.js';
 import {generatePointTrip} from './mock/point-mock.js';
 import {getRouteTripInfo} from './mock/route-trip-info-mock.js';
-import {renderTemplate} from './util.js';
+import {renderTemplate, renderElement, RenderPosition} from './util.js';
 
 const QUANTITY_OF_DATA_POINTS = 15;
 
