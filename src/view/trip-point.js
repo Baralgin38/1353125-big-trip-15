@@ -24,7 +24,7 @@ const showOffers = (offersData) => {
   </ul>`;
 };
 
-const getTripEventsPointTemplate = (pointData) => {
+const getTripPointTemplate = (pointData) => {
   const {type, destination, offer, basicPrice, dateFrom, dateTo} = pointData;
 
   return `<li class="trip-events__item">
@@ -60,14 +60,14 @@ const getTripEventsPointTemplate = (pointData) => {
 </li>`;
 };
 
-export default class TripEventPoint {
+export default class TripPoint {
   constructor (pointData) {
     this._pointData = pointData;
     this._element = null;
   }
 
   getTemplate () {
-    return getTripEventsPointTemplate(this._pointData);
+    return getTripPointTemplate(this._pointData);
   }
 
   getElement () {
