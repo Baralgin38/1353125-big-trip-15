@@ -129,7 +129,7 @@ const generateDateTo = () => {
   return dayjs().add(hours, 'h').add(minutes, 'm');
 };
 
-const generatePointTrip = () => {
+export const generatePointTrip = () => {
   const type = generateType();
 
   return {
@@ -143,5 +143,3 @@ const generatePointTrip = () => {
     id: getRandomInteger(0, 25),
   };
 };
-
-export {generatePointTrip};
