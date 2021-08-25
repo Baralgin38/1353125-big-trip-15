@@ -1,13 +1,13 @@
 import TripInfoView from './view/trip-info.js';
-import TripEventPointView from './view/trip-events-point.js';
-import TripEventListView from './view/trip-events-list.js';
+import TripPointView from './view/trip-point.js';
+import TripPointListView from './view/trip-point-list.js';
 import SortView from './view/sort.js';
 import MenuView from './view/menu.js';
 import FilterView from './view/filter.js';
 import EventEditFormView from './view/event-edit-form.js';
 import {generatePointTrip} from './mock/point-mock.js';
 import {getRouteTripInfo} from './mock/route-trip-info-mock.js';
-import {renderElement, RenderPosition} from './util.js';
+import {render, RenderPosition} from './util.js';
 
 const QUANTITY_OF_DATA_POINTS = 15;
 
@@ -21,20 +21,39 @@ const tripHeaderMainElement = siteHeaderElement.querySelector('.trip-main');
 const tripMenu = tripHeaderMainElement.querySelector('.trip-controls__navigation');
 const tripFilters = tripHeaderMainElement.querySelector('.trip-controls__filters');
 
-renderElement (tripHeaderMainElement, new TripInfoView(routeTripInfo).getElement(), RenderPosition.AFTERBEGIN);
-renderElement (tripMenu, new MenuView().getElement(), RenderPosition.BEFOREEND);
-renderElement (tripFilters, new FilterView().getElement(), RenderPosition.BEFOREEND);
+render(tripHeaderMainElement, new TripInfoView(routeTripInfo).getElement(), RenderPosition.AFTERBEGIN);
+render(tripMenu, new MenuView().getElement(), RenderPosition.BEFOREEND);
+render(tripFilters, new FilterView().getElement(), RenderPosition.BEFOREEND);
 
 const tripContentAndSortingContainer = siteMainElement.querySelector('.trip-events');
 
-renderElement(tripContentAndSortingContainer, new SortView().getElement(), RenderPosition.BEFOREEND);
+render(tripContentAndSortingContainer, new SortView().getElement(), RenderPosition.BEFOREEND);
 
-const tripEventListComponent = new TripEventListView();
+const tripPointListComponent = new TripPointListView();
 
-renderElement (tripContentAndSortingContainer, tripEventListComponent.getElement(), RenderPosition.BEFOREEND);
-renderElement (tripEventListComponent.getElement(), new EventEditFormView(tripPoints[0]).getElement(), RenderPosition.BEFOREEND);
+render(tripContentAndSortingContainer, tripPointListComponent.getElement(), RenderPosition.BEFOREEND);
 
-for (let i = 1; i < tripPoints.length; i++) {
-  renderElement (tripEventListComponent.getElement(), new TripEventPointView(tripPoints[i]).getElement(), RenderPosition.BEFOREEND);
-}
+const renderTripPoint = (tripPointList, tripPoint) => {
+  const tripPointComponent = new TripPointView(tripPoint);
+  const eventEditFormComponent = new EventEditFormView(tripPoint);
+
+  const replacePointToEditForm = () => tripPointList.replaceChild(eventEditFormComponent.getElement(), tripPointComponent.getElement());
+  const replaceEditFormToPoint = () => tripPointList.replaceChild(tripPointComponent.getElement(), eventEditFormComponent.getElement());
+
+  tripPointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+    replacePointToEditForm();
+  });
+
+  eventEditFormComponent.getElement().querySelector('.event--edit').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    replaceEditFormToPoint();
+  });
+
+  render(tripPointList, tripPointComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
+tripPoints.forEach((value) => (
+  renderTripPoint(tripPointListComponent.getElement(), value)
+));
+
 
