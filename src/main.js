@@ -40,13 +40,28 @@ const renderTripPoint = (tripPointList, tripPoint) => {
   const replacePointToEditForm = () => tripPointList.replaceChild(eventEditFormComponent.getElement(), tripPointComponent.getElement());
   const replaceEditFormToPoint = () => tripPointList.replaceChild(tripPointComponent.getElement(), eventEditFormComponent.getElement());
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Esc' || evt.key === 'Escape') {
+      evt.preventDefault();
+      replaceEditFormToPoint();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+  };
+
   tripPointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
     replacePointToEditForm();
+    document.addEventListener('keydown', onEscKeyDown);
   });
 
   eventEditFormComponent.getElement().querySelector('.event--edit').addEventListener('submit', (evt) => {
     evt.preventDefault();
     replaceEditFormToPoint();
+    document.removeEventListener('keydown', onEscKeyDown);
+  });
+
+  eventEditFormComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+    replaceEditFormToPoint();
+    document.removeEventListener('keydown', onEscKeyDown);
   });
 
   render(tripPointList, tripPointComponent.getElement(), RenderPosition.BEFOREEND);
