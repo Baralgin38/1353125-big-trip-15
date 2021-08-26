@@ -1,3 +1,5 @@
+import {createElement} from '../util.js';
+
 const printCities = (cities) => {
   if (cities.length <= 3) {
     return cities.join(' — ');
@@ -7,14 +9,14 @@ const printCities = (cities) => {
 };
 
 const printDates = (dates, months) => {
-  if (months.length > 1) {
+  if (months[0] === months.length - 1) {
     return `${months[0]} ${dates[0]}&nbsp;&mdash;&nbsp;${months[months.length -1]} ${dates[dates.length - 1]}`;
   } else {
     return `${months[0]} ${dates[0]}&nbsp;&mdash;&nbsp;${dates[dates.length - 1]}`;
   }
 };
 
-export  const getTripInfoTemplate = (data) => {
+const getTripInfoTemplate = (data) => {
   const {cities, dates, months, totalPrice} = data;
 
   return `<section class="trip-main__trip-info  trip-info">
@@ -29,3 +31,26 @@ export  const getTripInfoTemplate = (data) => {
   </p>
 </section>`;
 };
+
+export default class TripInfo {
+  constructor (data) {
+    this._routeTripInfo = data;
+    this._element = null;
+  }
+
+  getTemplate () {
+    return getTripInfoTemplate(this._routeTripInfo);
+  }
+
+  getElement () {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement () {
+    this._element = null;
+  }
+}

@@ -1,3 +1,5 @@
+import {createElement} from '../util.js';
+
 const addOffer = (offerData) => {
   const {title, price} = offerData;
 
@@ -40,7 +42,7 @@ const showDestination = (destinationData) => {
   </section>`;
 };
 
-export const getEditFormTemplate = (data) => {
+const getEditFormTemplate = (data) => {
   const {type, destination, offer, basicPrice, dateFrom, dateTo} = data;
 
   return `<li class="trip-events__item">
@@ -152,3 +154,26 @@ export const getEditFormTemplate = (data) => {
   </form>
 </li>`;
 };
+
+export default class EventEditForm {
+  constructor (data) {
+    this._dataOfPointTrip = data;
+    this._element = null;
+  }
+
+  getTemplate () {
+    return getEditFormTemplate(this._dataOfPointTrip);
+  }
+
+  getElement () {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement () {
+    this._element = null;
+  }
+}
