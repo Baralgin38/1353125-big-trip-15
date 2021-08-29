@@ -123,22 +123,23 @@ const generateDateFrom = () => {
   return dayjs().add(hours, 'h').add(minutes, 'm');
 };
 
-const generateDateTo = () => {
-  const hours = getRandomInteger(4, 7);
+const generateDateTo = (dateFrom) => {
+  const hours = getRandomInteger(0, 2);
   const minutes = getRandomInteger(0, 45);
-  return dayjs().add(hours, 'h').add(minutes, 'm');
+  return dayjs(dateFrom).add(hours, 'h').add(minutes, 'm');
 };
 
 export const generatePointTrip = () => {
   const type = generateType();
+  const dateFrom = generateDateFrom();
 
   return {
     type,
     destination: generateDestination(),
     offer: getOffers(type),
     basicPrice: getRandomInteger(0, 1550),
-    dateFrom: generateDateFrom(),
-    dateTo: generateDateTo(),
+    dateFrom,
+    dateTo: generateDateTo(dateFrom),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     id: getRandomInteger(0, 25),
   };
