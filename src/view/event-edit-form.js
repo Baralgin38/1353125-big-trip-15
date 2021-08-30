@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import AbstractView from './abstract.js';
 
 const addOffer = (offerData) => {
   const {title, price} = offerData;
@@ -155,25 +155,13 @@ const getEditFormTemplate = (data) => {
 </li>`;
 };
 
-export default class EventEditForm {
+export default class EventEditForm extends AbstractView{
   constructor (data) {
+    super();
     this._dataOfPointTrip = data;
-    this._element = null;
   }
 
   getTemplate () {
     return getEditFormTemplate(this._dataOfPointTrip);
-  }
-
-  getElement () {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement () {
-    this._element = null;
   }
 }
