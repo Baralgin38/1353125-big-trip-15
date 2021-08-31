@@ -21,11 +21,6 @@ const tripHeaderMainElement = siteHeaderElement.querySelector('.trip-main');
 const tripMenu = tripHeaderMainElement.querySelector('.trip-controls__navigation');
 const tripFilters = tripHeaderMainElement.querySelector('.trip-controls__filters');
 
-if (tripPoints.length !== 0) {
-  const routeTripInfo = getRouteTripInfo(tripPoints);
-  render(tripHeaderMainElement, new TripInfoView(routeTripInfo), RenderPosition.AFTERBEGIN);
-}
-
 render(tripMenu, new MenuView(), RenderPosition.BEFOREEND);
 render(tripFilters, new FilterView(), RenderPosition.BEFOREEND);
 
@@ -48,18 +43,17 @@ const renderTripPoint = (tripPointList, tripPoint) => {
     }
   };
 
-  tripPointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  tripPointComponent.setClickHandler(() => {
     replacePointToEditForm();
     document.addEventListener('keydown', onEscKeyDown);
   });
 
-  eventEditFormComponent.getElement().querySelector('.event--edit').addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  eventEditFormComponent.setFormSubmitHandler(() => {
     replaceEditFormToPoint();
     document.removeEventListener('keydown', onEscKeyDown);
   });
 
-  eventEditFormComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  eventEditFormComponent.setCloseClickHandler(() => {
     replaceEditFormToPoint();
     document.removeEventListener('keydown', onEscKeyDown);
   });
@@ -70,6 +64,9 @@ const renderTripPoint = (tripPointList, tripPoint) => {
 if (tripPoints.length === 0) {
   render(tripContentAndSortingContainer, new EmptyPointListView(), RenderPosition.BEFOREEND);
 } else {
+  const routeTripInfo = getRouteTripInfo(tripPoints);
+  render(tripHeaderMainElement, new TripInfoView(routeTripInfo), RenderPosition.AFTERBEGIN);
+
   const tripPointListComponent = new TripPointListView();
   render(tripContentAndSortingContainer, tripPointListComponent, RenderPosition.BEFOREEND);
   tripPoints.forEach((value) => (
