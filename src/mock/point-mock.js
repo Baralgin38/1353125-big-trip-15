@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {getRandomInteger} from '../util';
+import {getRandomInteger} from '../util/common.js';
 
 const generateType = () => {
   const type = [

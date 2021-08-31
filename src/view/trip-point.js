@@ -1,4 +1,4 @@
-import {getEventDuration} from '../util.js';
+import {getEventDuration} from '../util/common.js';
 import AbstractView from './abstract.js';
 
 const addOffer = (offerData) => {
