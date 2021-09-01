@@ -1,4 +1,5 @@
-import {getEventDuration, createElement} from '../util.js';
+import {getEventDuration} from '../util/common.js';
+import AbstractView from './abstract.js';
 
 const addOffer = (offerData) => {
   const {title, price} = offerData;
@@ -60,25 +61,24 @@ const getTripPointTemplate = (pointData) => {
 </li>`;
 };
 
-export default class TripPoint {
+export default class TripPoint extends AbstractView{
   constructor (pointData) {
+    super();
     this._pointData = pointData;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate () {
     return getTripPointTemplate(this._pointData);
   }
 
-  getElement () {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler() {
+    this._callback.editClick();
   }
 
-  removeElement () {
-    this._element = null;
+  setClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
   }
 }
+
