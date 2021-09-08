@@ -7,6 +7,7 @@ import EmptyPointListView from '../view/empty-point-list.js';
 import PointPresenter from './point.js';
 import {render, RenderPosition} from '../util/render.js';
 import {getRouteTripInfo} from '../mock/route-trip-info-mock.js';
+import {updateItem} from '../util/common.js';
 
 
 export default class Trip {
@@ -22,11 +23,18 @@ export default class Trip {
     this._menuComponent = new MenuView();
     this._filterComponent = new FilterView();
     this._emptyListComponent = new EmptyPointListView();
+
+    this._handleTaskChange = this._handleTaskChange.bind(this);
   }
 
   init(tripPoints) {
     this._tripPoints = tripPoints.slice();
     this._renderTrip();
+  }
+
+  _handlePointChange(updatedPoint) {
+    this._tripPoints = updateItem(this._tripPoints, updatedPoint);
+    this._pointPresenter.get(updatedPoint.id).init(updatedPoint);
   }
 
   _renderTripInfo() {
