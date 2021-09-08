@@ -18,7 +18,7 @@ export default class Point  {
     this._pointComponent = new TripPointView(point);
     this._eventEditFormComponent = new EventEditFormView(point);
 
-    this._pointComponent.setClickHandler(this._handleEditClick);
+    this._pointComponent.setEditClickHandler(this._handleEditClick);
     this._eventEditFormComponent.setFormSubmitHandler(this._handleSubmitForm);
     this._eventEditFormComponent.setCloseClickHandler(this._handleCloseEditClick);
 
