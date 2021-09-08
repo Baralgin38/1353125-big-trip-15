@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import nanoid from 'nanoid';
+import {nanoid} from 'nanoid';
 import {getRandomInteger} from '../util/common.js';
 
 const generateType = () => {

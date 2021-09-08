@@ -24,7 +24,7 @@ export default class Trip {
     this._filterComponent = new FilterView();
     this._emptyListComponent = new EmptyPointListView();
 
-    this._handleTaskChange = this._handleTaskChange.bind(this);
+    this._handlePointChange = this._handlePointChange.bind(this);
   }
 
   init(tripPoints) {
@@ -59,7 +59,7 @@ export default class Trip {
   }
 
   _renderPoint(tripPoint) {
-    const pointPresenter = new PointPresenter(this._pointListComponent);
+    const pointPresenter = new PointPresenter(this._pointListComponent, this._handlePointChange);
     pointPresenter.init(tripPoint);
     this._pointPresenter.set(tripPoint.id, pointPresenter);
   }
@@ -83,9 +83,7 @@ export default class Trip {
     } else {
       this._renderTripInfo();
       this._renderPointList();
-      this._tripPoints.forEach((tripPoint) => {
-        this._renderPoint(tripPoint);
-      });
+      this._tripPoints.forEach((tripPoint) => this._renderPoint(tripPoint));
     }
   }
 }

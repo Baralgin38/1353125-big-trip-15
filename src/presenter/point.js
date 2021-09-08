@@ -3,8 +3,9 @@ import EventEditFormView from '../view/event-edit-form.js';
 import {render, RenderPosition,replace, remove} from '../util/render.js';
 
 export default class Point  {
-  constructor(pointListContainer) {
+  constructor(pointListContainer, changeData) {
     this._pointListContainer = pointListContainer;
+    this._changeData = changeData;
 
     this._pointComponent = null;
     this._eventEditFormComponent = null;
@@ -13,6 +14,7 @@ export default class Point  {
     this._handleSubmitForm = this._handleSubmitForm.bind(this);
     this._handleCloseEditClick = this._handleCloseEditClick.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
+    this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
   }
 
   init(point) {
@@ -25,6 +27,7 @@ export default class Point  {
     this._eventEditFormComponent = new EventEditFormView(point);
 
     this._pointComponent.setEditClickHandler(this._handleEditClick);
+    this._pointComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._eventEditFormComponent.setFormSubmitHandler(this._handleSubmitForm);
     this._eventEditFormComponent.setCloseClickHandler(this._handleCloseEditClick);
 
@@ -77,5 +80,17 @@ export default class Point  {
 
   _handleCloseEditClick() {
     this._replaceEditFormToPoint();
+  }
+
+  _handleFavoriteClick() {
+    this._changeData(
+      Object.assign(
+        {},
+        this._point,
+        {
+          isFavorite: !this._point.isFavorite,
+        },
+      ),
+    );
   }
 }
