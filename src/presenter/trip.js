@@ -15,6 +15,7 @@ export default class Trip {
     this._tripMenuContainer = elementContainers[1];
     this._tripFilterContainer = elementContainers[2];
     this._tripContentContainer = elementContainers[3];
+    this._pointPresenter = new Map();
 
     this._pointListComponent = new TripPointListView();
     this._sortComponent = new SortView();
@@ -45,17 +46,23 @@ export default class Trip {
     render(this._tripContentContainer, this._sortComponent, RenderPosition.BEFOREEND);
   }
 
-  _renderTripPointList() {
+  _renderPointList() {
     render(this._tripContentContainer, this._pointListComponent, RenderPosition.BEFOREEND);
   }
 
-  _renderTripPoint(tripPoint) {
+  _renderPoint(tripPoint) {
     const pointPresenter = new PointPresenter(this._pointListComponent);
     pointPresenter.init(tripPoint);
+    this._pointPresenter.set(tripPoint.id, pointPresenter);
   }
 
   _renderEmptyList() {
     render(this.tripContentContainer, this._emptyListComponent, RenderPosition.BEFOREEND);
+  }
+
+  _clearPointList() {
+    this._pointPresenter.forEach((presenter) => presenter.destroy());
+    this._pointPresenter.clear();
   }
 
   _renderTrip() {
@@ -67,9 +74,9 @@ export default class Trip {
       this._renderEmptyList();
     } else {
       this._renderTripInfo();
-      this._renderTripPointList();
+      this._renderPointList();
       this._tripPoints.forEach((tripPoint) => {
-        this._renderTripPoint(tripPoint);
+        this._renderPoint(tripPoint);
       });
     }
   }

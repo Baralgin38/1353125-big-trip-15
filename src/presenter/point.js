@@ -1,10 +1,13 @@
 import TripPointView from '../view/trip-point.js';
 import EventEditFormView from '../view/event-edit-form.js';
-import {render, RenderPosition,replace} from '../util/render.js';
+import {render, RenderPosition,replace, remove} from '../util/render.js';
 
 export default class Point  {
   constructor(pointListContainer) {
     this._pointListContainer = pointListContainer;
+
+    this._pointComponent = null;
+    this._eventEditFormComponent = null;
 
     this._handleEditClick = this._handleEditClick.bind(this);
     this._handleSubmitForm = this._handleSubmitForm.bind(this);
@@ -15,6 +18,9 @@ export default class Point  {
   init(point) {
     this._point = point;
 
+    const prevPointComponent = this._pointComponent;
+    const prevEventEditFormComponent = this._eventEditFormComponent;
+
     this._pointComponent = new TripPointView(point);
     this._eventEditFormComponent = new EventEditFormView(point);
 
@@ -22,7 +28,26 @@ export default class Point  {
     this._eventEditFormComponent.setFormSubmitHandler(this._handleSubmitForm);
     this._eventEditFormComponent.setCloseClickHandler(this._handleCloseEditClick);
 
-    render(this._pointListContainer, this._pointComponent, RenderPosition.BEFOREEND);
+    if (prevPointComponent === null || prevEventEditFormComponent === null) {
+      render(this._pointListContainer, this._pointComponent, RenderPosition.BEFOREEND);
+      return;
+    }
+
+    if (this._pointListContainer.getElement().contains(prevPointComponent.getElement())) {
+      replace(this._pointComponent, prevPointComponent);
+    }
+
+    if (this._pointListContainer.getElement().contains(prevEventEditFormComponent.getElement())) {
+      replace(this._eventEditFormComponent, prevEventEditFormComponent);
+    }
+
+    remove(prevPointComponent);
+    remove(prevEventEditFormComponent);
+  }
+
+  destroy() {
+    remove(this._pointComponent);
+    remove(this._eventEditFormComponent);
   }
 
   _replacePointToEditForm() {
