@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 const MINUTES_PER_HOUR = 60;
 const MINUTES_PER_DAY = 1440;
 const HOURS_PER_DAY = 24;
@@ -37,3 +39,15 @@ export const updateItem = (items, update) => {
     ...items.slice(index + 1),
   ];
 };
+
+export const sortPrice = (pointA, pointB) => pointB.basicPrice - pointA.basicPrice;
+
+
+export const sortTime = (pointA, pointB) => {
+  const durationPointA = dayjs(pointA.dateTo.format()).diff(pointA.dateFrom.format());
+  const durationPointB = dayjs(pointB.dateTo.format()).diff(pointB.dateFrom.format());
+
+  return durationPointB - durationPointA;
+};
+
+
