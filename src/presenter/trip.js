@@ -12,11 +12,16 @@ import {SortType} from '../const.js';
 
 
 export default class Trip {
-  constructor(elementContainers) {
-    this._tripInfoContainer = elementContainers[0];
-    this._tripMenuContainer = elementContainers[1];
-    this._tripFilterContainer = elementContainers[2];
-    this._tripContentContainer = elementContainers[3];
+  constructor(
+    tripHeaderMainElement,
+    tripMenu,
+    tripFilters,
+    tripContentAndSortingContainer,
+  ) {
+    this._tripInfoContainer = tripHeaderMainElement;
+    this._tripMenuContainer = tripMenu;
+    this._tripFilterContainer = tripFilters;
+    this._tripContentContainer = tripContentAndSortingContainer;
     this._currentSortType = SortType.DAY;
 
     this._pointPresenter = new Map();
@@ -107,7 +112,7 @@ export default class Trip {
   }
 
   _renderEmptyList() {
-    render(this.tripContentContainer, this._emptyListComponent, RenderPosition.BEFOREEND);
+    render(this._tripContentContainer, this._emptyListComponent, RenderPosition.BEFOREEND);
   }
 
   _clearPoints() {
@@ -118,12 +123,12 @@ export default class Trip {
   _renderTrip() {
     this._renderMenu();
     this._renderFilter();
-    this._renderSort();
 
-    if (this._tripPoints === 0) {
+    if (this._tripPoints.length === 0) {
       this._renderEmptyList();
     } else {
       this._renderTripInfo();
+      this._renderSort();
       this._renderPointList();
       this._renderPoints();
     }

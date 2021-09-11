@@ -2,7 +2,7 @@ import TripPresenter from './presenter/trip.js';
 import {generatePointTrip} from './mock/point-mock.js';
 
 
-const QUANTITY_OF_DATA_POINTS = 15;
+const QUANTITY_OF_DATA_POINTS = 10;
 
 const tripPoints = new Array(QUANTITY_OF_DATA_POINTS).fill().map(generatePointTrip);
 
@@ -14,13 +14,11 @@ const tripMenu = tripHeaderMainElement.querySelector('.trip-controls__navigation
 const tripFilters = tripHeaderMainElement.querySelector('.trip-controls__filters');
 const tripContentAndSortingContainer = siteMainElement.querySelector('.trip-events');
 
-const elementContainers = [
+const tripPresenter = new TripPresenter(
   tripHeaderMainElement,
   tripMenu,
   tripFilters,
   tripContentAndSortingContainer,
-];
-
-const tripPresenter = new TripPresenter(elementContainers);
+);
 tripPresenter.init(tripPoints);
 
