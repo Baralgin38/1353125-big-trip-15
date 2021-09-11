@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {nanoid} from 'nanoid';
 import {getRandomInteger} from '../util/common.js';
 
 const generateType = () => {
@@ -141,6 +142,6 @@ export const generatePointTrip = () => {
     dateFrom,
     dateTo: generateDateTo(dateFrom),
     isFavorite: Boolean(getRandomInteger(0, 1)),
-    id: getRandomInteger(0, 25),
+    id: nanoid(),
   };
 };
